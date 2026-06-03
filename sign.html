@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up - WIZKENO STYLISTY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #e94560;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e94560;
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 60px;
+        }
+        
+        .auth-info {
+            flex: 1;
+            background: linear-gradient(135deg, #e94560 0%, #d63a54 100%);
+            padding: 50px 40px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .auth-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-info p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .auth-info .btn-switch {
+            display: inline-block;
+            padding: 12px 35px;
+            background: #fff;
+            color: #e94560;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .auth-info .btn-switch:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .auth-forms {
+            flex: 1;
+            padding: 50px 40px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h1 {
+            color: #1a1a2e;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #666;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab-btn.active {
+            color: #e94560;
+            border-bottom-color: #e94560;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #e94560 0%, #d63a54 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        .form-content {
+            display: none;
+        }
+        
+        .form-content.active {
+            display: block;
+        }
+        
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .social-login p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: #e94560;
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .auth-info {
+                padding: 30px 20px;
+            }
+            
+            .auth-forms {
+                padding: 30px 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">WIZKENO <span>STYLISTY</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <!-- Info Side -->
+        <div class="auth-info">
+            <h2 id="infoTitle">Welcome Back!</h2>
+            <p id="infoText">To keep connected with us please login with your personal account.</p>
+            <a href="#" class="btn-switch" id="switchBtn" onclick="switchForm(event)">SIGN IN</a>
+        </div>
+        
+        <!-- Forms Side -->
+        <div class="auth-forms">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showForm('signin')">Sign In</button>
+                <button class="tab-btn" onclick="showForm('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Sign In Form -->
+            <div class="form-content active" id="signin">
+                <div class="form-header">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to continue to WIZKENO STYLISTY</p>
+                </div>
+                
+                <form onsubmit="event.preventDefault(); alert('Login successful!');">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">SIGN IN</button>
+                </form>
+                
+                <div class="social-login">
+                    <p>Or continue with</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">G</a>
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">in</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <div class="form-content" id="signup">
+                <div class="form-header">
+                    <h1>Create Account!</h1>
+                    <p>Sign up to start your shopping journey</p>
+                </div>
+                
+                <form onsubmit="event.preventDefault(); alert('Account created successfully!');">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">CREATE ACCOUNT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formName) {
+            const contents = document.querySelectorAll('.form-content');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            contents.forEach(content => content.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(formName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function switchForm(e) {
+            e.preventDefault();
+            const isSignin = document.getElementById('signin').classList.contains('active');
+            
+            if (isSignin) {
+                showForm('signup');
+                document.getElementById('infoTitle').textContent = "Hello, Friend!";
+                document.getElementById('infoText').textContent = "Enter your personal details and start your journey with us.";
+                document.getElementById('switchBtn').textContent = "SIGN UP";
+            } else {
+                showForm('signin');
+                document.getElementById('infoTitle').textContent = "Welcome Back!";
+                document.getElementById('infoText').textContent = "To keep connected with us please login with your personal account.";
+                document.getElementById('switchBtn').textContent = "SIGN IN";
+            }
+        }
+    </script>
+
+</body>
+</html>

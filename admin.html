@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - WIZKENO STYLISTY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #e94560;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e94560;
+        }
+        
+        /* Admin Container */
+        .admin-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .admin-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-header p {
+            opacity: 0.8;
+        }
+        
+        .admin-card {
+            background: #fff;
+            border-radius: 0 0 15px 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-section h2 {
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Image Upload */
+        .image-upload {
+            border: 3px dashed #e0e0e0;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: #e94560;
+            background: #fdf5f7;
+        }
+        
+        .image-upload input[type="file"] {
+            display: none;
+        }
+        
+        .upload-icon {
+            font-size: 50px;
+            color: #e94560;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .upload-text span {
+            color: #e94560;
+            font-weight: 500;
+        }
+        
+        /* Preview */
+        .preview-container {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .preview-container.show {
+            display: block;
+        }
+        
+        .preview-image {
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn-submit {
+            flex: 1;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #e94560 0%, #d63a54 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-reset {
+            padding: 15px 30px;
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-reset:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Product List */
+        .product-list {
+            margin-top: 40px;
+        }
+        
+        .product-list h2 {
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        .table tr:hover {
+            background: #fdf5f7;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 30px 50px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #e94560;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-card {
+                padding: 25px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">WIZKENO <span>STYLISTY</span> - Admin</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Product Management</h1>
+            <p>Add, edit, and manage your product inventory</p>
+        </div>
+        
+        <div class="admin-card">
+            <form id="productForm">
+                <!-- Product Details -->
+                <div class="form-section">
+                    <h2>Product Information</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productName">Product Name *</label>
+                            <input type="text" id="productName" name="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Category *</label>
+                            <select id="productCategory" name="productCategory" required>
+                                <option value="">-- Select Category --</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="clothes">Clothes</option>
+                                <option value="watches">Watches</option>
+                                <option value="jewelry">Jewelry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productDesc">Description *</label>
+                        <textarea id="productDesc" name="productDesc" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">Price (FRW) *</label>
+                            <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock Quantity *</label>
+                            <input type="number" id="productStock" name="productStock" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Image Upload -->
+                <div class="form-section">
+                    <h2>Product Image</h2>
+                    
+                    <label class="image-upload" for="productImage">
+                        <input type="file" id="productImage" name="productImage" accept="image/*" onchange="previewImage(event)">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">
+                            <span>Click to upload</span> or drag and drop<br>
+                            PNG, JPG, GIF up to 10MB
+                        </div>
+                    </label>
+                    
+                    <div class="preview-container" id="previewContainer">
+                        <p style="margin: 15px 0; color: #666;">Image Preview:</p>
+                        <img id="previewImg" class="preview-image" src="" alt="Preview">
+                    </div>
+                </div>
+                
+                <!-- Additional Details -->
+                <div class="form-section">
+                    <h2>Additional Details</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productBrand">Brand</label>
+                            <input type="text" id="productBrand" name="productBrand">
+                        </div>
+                        <div class="form-group">
+                            <label for="productColor">Color</label>
+                            <input type="text" id="productColor" name="productColor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productSize">Size</label>
+                            <input type="text" id="productSize" name="productSize" placeholder="e.g., S, M, L, or 42, 43, 44">
+                        </div>
+                        <div class="form-group">
+                            <label for="productStatus">Status</label>
+                            <select id="productStatus" name="productStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">Add Product</button>
+                    <button type="reset" class="btn-reset">Reset Form</button>
+                </div>
+            </form>
+            
+            <!-- Product List -->
+            <div class="product-list">
+                <h2>Existing Products</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Products will be loaded dynamically from localStorage by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+        <p>&copy; 2026 WIZKENO STYLISTY. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // PRODUCT MANAGEMENT SYSTEM - WIZKENO STYLISTY ADMIN
+        // ============================================================
+        
+        // ----------------------------------------------------------
+        // STEP 1: LOAD PRODUCTS FROM BROWSER STORAGE (localStorage)
+        // ----------------------------------------------------------
+        // localStorage is a browser feature that stores data persistently
+        // even after the browser is closed. We use it to share products
+        // between admin panel, products page, and order page.
+        //
+        // How it works:
+        // - When admin adds a product, it's saved to localStorage
+        // - When products page loads, it reads from localStorage
+        // - This way, all pages share the same product data
+        //
+        // Syntax: localStorage.getItem('key') - reads data
+        //         localStorage.setItem('key', value) - saves data
+        //         JSON.parse() - converts string back to array
+        //         JSON.stringify() - converts array to string
+        // ----------------------------------------------------------
+        
+        let products = JSON.parse(localStorage.getItem('wizkenoProducts')) || [
+            // Default products shown if no products exist in storage
+            { id: 1, name: 'Nike Air Max 2024', category: 'shoes', price: 227988, stock: 50, status: 'active', image: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400' },
+            { id: 2, name: 'Premium Winter Jacket', category: 'clothes', price: 359988, stock: 30, status: 'active', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400' },
+            { id: 3, name: 'Luxury Chrono Watch', category: 'watches', price: 719988, stock: 25, status: 'active', image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400' },
+            { id: 4, name: 'Gold Pendant Necklace', category: 'jewelry', price: 539988, stock: 15, status: 'active', image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400' }
+        ];
+        
+        // If no products exist in storage, save the default products
+        if (!localStorage.getItem('wizkenoProducts')) {
+            localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+        }
+        
+        // ----------------------------------------------------------
+        // STEP 2: RENDER PRODUCTS TABLE
+        // ----------------------------------------------------------
+        // This function displays all products in the admin table.
+        // It clears the table first, then loops through each product
+        // and creates a table row (tr) for each one.
+        // ----------------------------------------------------------
+        
+        function renderProducts() {
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+            
+            // Loop through each product in the array
+            products.forEach((product, index) => {
+                const row = tableBody.insertRow(); // Create new table row
+                
+                // Create HTML for each row with product data
+                // ${variable} - inserts JavaScript variable into HTML string
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${parseInt(product.price).toLocaleString()} FRW</td>
+                    <td>${product.stock}</td>
+                    <td><span class="status-badge ${product.status === 'active' ? 'status-active' : 'status-inactive'}">${product.status}</span></td>
+                    <td>
+                        <a href="#" onclick="editProduct(${index})" style="color: #e94560; margin-right: 10px;">Edit</a>
+                        <a href="#" onclick="deleteProduct(${index})" style="color: #666;">Delete</a>
+                    </td>
+                `;
+            });
+        }
+        
+        // ----------------------------------------------------------
+        // STEP 3: IMAGE PREVIEW FUNCTION
+        // ----------------------------------------------------------
+        // When admin uploads an image, this function displays a preview.
+        // FileReader is a built-in JavaScript API that reads files.
+        // ----------------------------------------------------------
+        
+        function previewImage(event) {
+            const file = event.target.files[0]; // Get the uploaded file
+            if (file) {
+                const reader = new FileReader(); // Create file reader object
+                // onload: runs when file finishes reading
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewContainer').classList.add('show');
+                }
+                reader.readAsDataURL(file); // Convert file to data URL (base64)
+            }
+        }
+        
+        // ----------------------------------------------------------
+        // STEP 4: ADD NEW PRODUCT
+        // ----------------------------------------------------------
+        // This runs when admin clicks "Add Product" button.
+        // It collects all form data and saves to localStorage.
+        // ----------------------------------------------------------
+        
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop form from submitting to server
+            
+            // Get all values from form inputs
+            const productName = document.getElementById('productName').value;
+            const productCategory = document.getElementById('productCategory').value;
+            const productDesc = document.getElementById('productDesc').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productStock = document.getElementById('productStock').value;
+            const productBrand = document.getElementById('productBrand').value;
+            const productColor = document.getElementById('productColor').value;
+            const productSize = document.getElementById('productSize').value;
+            const productStatus = document.getElementById('productStatus').value;
+            
+            // Get image URL (use preview or default)
+            const previewImg = document.getElementById('previewImg');
+            const imageUrl = previewImg.src && previewImg.src !== '' ? previewImg.src : 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400';
+            
+            // Create product object (like a data record)
+            const newProduct = {
+                id: products.length + 1, // Auto-generate ID
+                name: productName,
+                category: productCategory,
+                description: productDesc,
+                price: productPrice,
+                stock: productStock,
+                brand: productBrand,
+                color: productColor,
+                size: productSize,
+                status: productStatus,
+                image: imageUrl
+            };
+            
+            // Add new product to array (push = add to end)
+            products.push(newProduct);
+            
+            // Save to localStorage (must convert to string first)
+            localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+            
+            // Update the table display
+            renderProducts();
+            
+            alert('Product added successfully!');
+            this.reset(); // Clear form
+            document.getElementById('previewContainer').classList.remove('show');
+            document.getElementById('previewImg').src = '';
+        });
+        
+        // ----------------------------------------------------------
+        // STEP 5: DELETE PRODUCT
+        // ----------------------------------------------------------
+        // Removes product from array and updates storage.
+        // splice(index, 1) removes 1 item at the given index.
+        // ----------------------------------------------------------
+        
+        function deleteProduct(index) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                // Remove 1 item at the specified index
+                products.splice(index, 1);
+                
+                // Re-number all product IDs (1, 2, 3, ...)
+                products.forEach((p, i) => p.id = i + 1);
+                
+                // Save updated list to storage
+                localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+                
+                // Refresh the table
+                renderProducts();
+                
+                alert('Product deleted successfully!');
+            }
+        }
+        
+        // ----------------------------------------------------------
+        // STEP 6: EDIT PRODUCT (Placeholder)
+        // ----------------------------------------------------------
+        // This function would open the form pre-filled with
+        // product data for editing. Currently shows an alert.
+        // ----------------------------------------------------------
+        
+        function editProduct(index) {
+            const product = products[index];
+            alert('Edit functionality - Product: ' + product.name + '\n\nThis would open the form pre-filled with product data.');
+        }
+        
+        // ----------------------------------------------------------
+        // INITIALIZE: Run renderProducts when page loads
+        // ----------------------------------------------------------
+        // Always load fresh data from localStorage on page load
+        function init() {
+            products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+            
+            // If no products in storage, save defaults
+            if (!localStorage.getItem('wizkenoProducts')) {
+                localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+            }
+            
+            renderProducts();
+        }
+        
+        init();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIZKENO STYLISTY - Premium Fashion Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #e94560;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e94560;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .hero-content h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .tagline {
+            font-size: 28px !important;
+            font-weight: bold;
+            color: #e94560 !important;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #e94560;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .btn:hover {
+            background: #d63a54;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 80px 50px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 40px;
+            margin-bottom: 50px;
+            color: #1a1a2e;
+        }
+        
+        .section-title span {
+            color: #e94560;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .category-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .category-card h3 {
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        /* Featured Products */
+        .featured {
+            padding: 80px 50px;
+            background: #fff;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            color: #e94560;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .btn-small {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #1a1a2e;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-small:hover {
+            background: #e94560;
+        }
+        
+        /* Features */
+        .features {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .feature-item i {
+            font-size: 50px;
+            color: #e94560;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #e94560;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .hero {
+                height: 60vh;
+            }
+            
+            .categories, .featured, .features {
+                padding: 50px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">WIZKENO <span>STYLISTY</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>WELCOME TO WIZKENO STYLISTY</h1>
+            <p class="tagline">YOUR LOOK IS YOUR VALUE</p>
+            <p>Discover Premium Fashion & Style</p>
+            <a href="products.html" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <h2 class="section-title">Shop by <span>Category</span></h2>
+        <div class="category-grid">
+            <div class="category-card" onclick="window.location.href='products.html?category=shoes'">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" alt="Shoes">
+                <h3>Shoes</h3>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=clothes'">
+                <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400" alt="Clothes">
+                <h3>Clothes</h3>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=watches'">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Watches">
+                <h3>Watches</h3>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=jewelry'">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400" alt="Necklaces">
+                <h3>Jewelry</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured">
+        <h2 class="section-title">Featured <span>Products</span></h2>
+        <div class="product-grid" id="featuredProducts">
+            <!-- Products will be loaded dynamically from localStorage -->
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>Free Shipping</h3>
+                <p>On orders over 120,000 FRW</p>
+            </div>
+            <div class="feature-item">
+                <h3>Secure Payment</h3>
+                <p>100% Secure Transactions</p>
+            </div>
+            <div class="feature-item">
+                <h3>24/7 Support</h3>
+                <p>Dedicated Customer Service</p>
+            </div>
+            <div class="feature-item">
+                <h3>Easy Returns</h3>
+                <p>30-Day Return Policy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+        <p>&copy; 2026 WIZKENO STYLISTY. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // HOMEPAGE - WIZKENO STYLISTY
+        // ============================================================
+        // This page shows featured products on the homepage.
+        // Products are loaded from localStorage (shared with admin).
+        // ============================================================
+        
+        // ----------------------------------------------------------
+        // DEFAULT PRODUCTS (fallback if no storage)
+        // ----------------------------------------------------------
+        
+        const defaultProducts = [
+            { id: 1, name: 'Nike Air Max 2024', category: 'shoes', price: 227988, image: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400' },
+            { id: 2, name: 'Premium Winter Jacket', category: 'clothes', price: 359988, image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400' },
+            { id: 3, name: 'Luxury Chrono Watch', category: 'watches', price: 719988, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400' },
+            { id: 4, name: 'Gold Pendant Necklace', category: 'jewelry', price: 539988, image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400' }
+        ];
+        
+        // ----------------------------------------------------------
+        // LOAD PRODUCTS FROM STORAGE
+        // ----------------------------------------------------------
+        
+        let products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+        
+        if (!localStorage.getItem('wizkenoProducts')) {
+            localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+        }
+        
+        // ----------------------------------------------------------
+        // RENDER FEATURED PRODUCTS
+        // ----------------------------------------------------------
+        // Shows first 4 products as featured on homepage.
+        // ----------------------------------------------------------
+        
+        function renderFeaturedProducts() {
+            const productGrid = document.getElementById('featuredProducts');
+            productGrid.innerHTML = ''; // Clear existing
+            
+            // Show only first 4 products as featured
+            const featured = products.slice(0, 4);
+            
+            featured.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="price">${parseInt(product.price).toLocaleString()} FRW</p>
+                        <a href="order.html?product=${product.id}" class="btn-small">Order Now</a>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
+        
+        // Initial render
+        renderFeaturedProducts();
+        
+        // ----------------------------------------------------------
+        // AUTO-REFRESH WHEN DATA CHANGES
+        // ----------------------------------------------------------
+        
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'wizkenoProducts') {
+                products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+                renderFeaturedProducts();
+            }
+        });
+        
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+                renderFeaturedProducts();
+            }
+        });
+    </script>
+
+</body>
+</html>

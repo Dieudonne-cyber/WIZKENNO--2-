@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - WIZKENO STYLISTY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #e94560;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e94560;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 50px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .page-header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        
+        /* Order Form */
+        .order-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .order-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .order-card h2 {
+            color: #1a1a2e;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .product-preview {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .product-preview img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .product-preview h3 {
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .product-preview .price {
+            color: #e94560;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #e94560 0%, #d63a54 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .payment-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .payment-option:hover {
+            border-color: #e94560;
+            background: #fdf5f7;
+        }
+        
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+        
+        .payment-option:has(input:checked) {
+            border-color: #e94560;
+            background: #fdf5f7;
+        }
+        
+        .payment-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .payment-name {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .payment-info {
+            margin-top: 20px;
+        }
+        
+        .payment-card {
+            background: #f8f9fa;
+            border: 2px solid #e94560;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .payment-card h4 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+        
+        .payment-card p {
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .payment-card strong {
+            color: #e94560;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: #e94560;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">WIZKENO <span>STYLISTY</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Place Your Order</h1>
+        <p>Complete the form below to order your favorite items</p>
+    </section>
+
+    <!-- Order Form -->
+    <div class="order-container">
+        <div class="order-card">
+            <h2>Order Form</h2>
+            
+            <div class="product-preview">
+                <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400" alt="Product Image" id="productImage">
+                <div>
+                    <h3 id="productName">Select a Product</h3>
+                    <p id="productDesc">Choose your desired item from the products page</p>
+                    <span class="price" id="productPrice">0 FRW</span>
+                </div>
+            </div>
+            
+            <form id="orderForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" name="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product">Select Product *</label>
+                        <select id="product" name="product" required>
+                            <option value="">-- Select Product --</option>
+                            <!-- Products will be loaded dynamically -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Delivery Address *</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City *</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">ZIP Code *</label>
+                        <input type="text" id="zip" name="zip" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Special Instructions</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Any special requests or notes for your order..."></textarea>
+                </div>
+                
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <label>Payment Method *</label>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="mtn" required>
+                            <span class="payment-icon">📱</span>
+                            <span class="payment-name">MTN Mobile Money</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="airtel">
+                            <span class="payment-icon">📲</span>
+                            <span class="payment-name">Airtel Money</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="bank">
+                            <span class="payment-icon">🏦</span>
+                            <span class="payment-name">Bank Transfer</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Payment Details (shown based on selection) -->
+                <div id="paymentDetails">
+                    <div class="payment-info" id="mtnDetails" style="display: none;">
+                        <div class="payment-card">
+                            <h4>💳 MTN Mobile Money Payment</h4>
+                            <p>Pay to: <strong>079 877 8772</strong></p>
+                            <p>Account Name: <strong>WIZKENO STYLISTY</strong></p>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label for="userMtnNumber">Your MTN Phone Number *</label>
+                                <input type="tel" id="userMtnNumber" name="userMtnNumber" placeholder="Enter your MTN number (e.g., 078xxxxxxx)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-info" id="airtelDetails" style="display: none;">
+                        <div class="payment-card">
+                            <h4>💳 Airtel Money Payment</h4>
+                            <p>Pay to: <strong>079 877 8772</strong></p>
+                            <p>Account Name: <strong>WIZKENO STYLISTY</strong></p>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label for="userAirtelNumber">Your Airtel Phone Number *</label>
+                                <input type="tel" id="userAirtelNumber" name="userAirtelNumber" placeholder="Enter your Airtel number (e.g., 079xxxxxxx)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-info" id="bankDetails" style="display: none;">
+                        <div class="payment-card">
+                            <h4>🏦 Bank Transfer Details</h4>
+                            <p>Bank: <strong>Bank of Kigali</strong></p>
+                            <p>Account Number: <strong>100 230 740 474</strong></p>
+                            <p>Account Name: <strong>WIZKENO STYLISTY Ltd</strong></p>
+                            <p>SWIFT Code: <strong>BKIGRWRW</strong></p>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label for="userBankAccount">Your Bank Account Number *</label>
+                                <input type="text" id="userBankAccount" name="userBankAccount" placeholder="Enter your bank account number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="sign.html">Sign In</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+        <p>&copy; 2024 WIZKENO STYLISTY. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // ORDER PAGE - WIZKENO STYLISTY
+        // ============================================================
+        // This page handles order placement. Products are loaded
+        // from localStorage (same source as admin and products page).
+        // When customer submits order, it opens WhatsApp with details.
+        // ============================================================
+        
+        // ----------------------------------------------------------
+        // DEFAULT PRODUCTS (fallback if no storage)
+        // ----------------------------------------------------------
+        
+        const defaultProducts = [
+            { id: 1, name: 'Nike Air Max 2024', price: 227988, image: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400' },
+            { id: 2, name: 'Nike Jordan High', price: 299988, image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400' },
+            { id: 3, name: 'Adidas Ultraboost', price: 215988, image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400' },
+            { id: 4, name: 'Premium Winter Jacket', price: 359988, image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400' },
+            { id: 5, name: 'Elegant Summer Dress', price: 179988, image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400' },
+            { id: 6, name: 'Classic Business Suit', price: 479988, image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400' },
+            { id: 7, name: 'Luxury Chrono Watch', price: 719988, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400' },
+            { id: 8, name: 'Modern Smart Watch', price: 359988, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
+            { id: 9, name: 'Classic Gold Watch', price: 959988, image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400' },
+            { id: 10, name: 'Gold Pendant Necklace', price: 539988, image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400' },
+            { id: 11, name: 'Diamond Engagement Ring', price: 2999988, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400' },
+            { id: 12, name: 'Pearl Strand Necklace', price: 419988, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400' }
+        ];
+        
+        // ----------------------------------------------------------
+        // LOAD PRODUCTS FROM STORAGE
+        // ----------------------------------------------------------
+        
+        let products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+        
+        if (!localStorage.getItem('wizkenoProducts')) {
+            localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+        }
+        
+        // ----------------------------------------------------------
+        // POPULATE PRODUCT DROPDOWN
+        // ----------------------------------------------------------
+        // Creates option elements in the select dropdown.
+        // dataset attributes store extra data for each option.
+        // ----------------------------------------------------------
+        
+        function populateProductDropdown() {
+            const select = document.getElementById('product');
+            select.innerHTML = '<option value="">-- Select Product --</option>';
+            
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                // Store product data in dataset attributes for later use
+                option.dataset.name = product.name;
+                option.dataset.price = product.price;
+                option.dataset.img = product.image;
+                option.textContent = `${product.name} - ${parseInt(product.price).toLocaleString()} FRW`;
+                select.appendChild(option);
+            });
+        }
+        
+        // ----------------------------------------------------------
+        // HANDLE URL PRODUCT SELECTION
+        // ----------------------------------------------------------
+        // If user comes from products page with ?product=1 in URL,
+        // auto-select that product in the dropdown.
+        // ----------------------------------------------------------
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('product');
+        
+        // Populate products on page load
+        function init() {
+            products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+            
+            if (!localStorage.getItem('wizkenoProducts')) {
+                localStorage.setItem('wizkenoProducts', JSON.stringify(products));
+            }
+            
+            populateProductDropdown();
+            
+            // If URL has product parameter, select it
+            if (productId) {
+                const select = document.getElementById('product');
+                select.value = productId;
+                updateProductPreview();
+            }
+        }
+        
+        init();
+        
+        // Listen for dropdown changes
+        document.getElementById('product').addEventListener('change', updateProductPreview);
+        
+        // ----------------------------------------------------------
+        // AUTO-REFRESH WHEN DATA CHANGES
+        // ----------------------------------------------------------
+        
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'wizkenoProducts') {
+                products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+                populateProductDropdown();
+            }
+        });
+        
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                products = JSON.parse(localStorage.getItem('wizkenoProducts')) || defaultProducts;
+                populateProductDropdown();
+            }
+        });
+        
+        // ----------------------------------------------------------
+        // UPDATE PRODUCT PREVIEW
+        // ----------------------------------------------------------
+        // When user selects a product, show its image and price
+        // in the preview area above the form.
+        // ----------------------------------------------------------
+        
+        function updateProductPreview() {
+            const select = document.getElementById('product');
+            const option = select.options[select.selectedIndex];
+            
+            if (option.value) {
+                // Get data from dataset attributes
+                document.getElementById('productName').textContent = option.dataset.name || option.text.split(' - ')[0];
+                document.getElementById('productPrice').textContent = (parseInt(option.dataset.price || '0')).toLocaleString() + ' FRW';
+                document.getElementById('productImage').src = option.dataset.img || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400';
+            }
+        }
+        
+        // ----------------------------------------------------------
+        // HANDLE PAYMENT METHOD SELECTION
+        // ----------------------------------------------------------
+        // When user selects payment method (MTN/Airtel/Bank),
+        // show the corresponding payment details and input field.
+        // ----------------------------------------------------------
+        
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide all payment detail sections first
+                document.getElementById('mtnDetails').style.display = 'none';
+                document.getElementById('airtelDetails').style.display = 'none';
+                document.getElementById('bankDetails').style.display = 'none';
+                
+                // Show the selected payment method's details
+                if (this.value === 'mtn') {
+                    document.getElementById('mtnDetails').style.display = 'block';
+                } else if (this.value === 'airtel') {
+                    document.getElementById('airtelDetails').style.display = 'block';
+                } else if (this.value === 'bank') {
+                    document.getElementById('bankDetails').style.display = 'block';
+                }
+            });
+        });
+        
+        // ----------------------------------------------------------
+        // HANDLE ORDER FORM SUBMISSION
+        // ----------------------------------------------------------
+        // Collects all form data, validates, and opens WhatsApp
+        // with pre-filled order message for the admin.
+        // ----------------------------------------------------------
+        
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop default form submission
+            
+            // Get customer details from form
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            // Get selected product info
+            const productSelect = document.getElementById('product');
+            const productOption = productSelect.options[productSelect.selectedIndex];
+            const productName = productOption.dataset.name || productOption.text.split(' - ')[0];
+            const productPrice = productOption.dataset.price;
+            
+            // Get delivery details
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const zip = document.getElementById('zip').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Get selected payment method
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            const paymentMethodName = paymentMethod ? paymentMethod.value.toUpperCase() : 'Not selected';
+            
+            // Get user's payment details (their phone number or bank account)
+            let userPaymentDetails = '';
+            if (paymentMethod) {
+                if (paymentMethod.value === 'mtn') {
+                    const userNumber = document.getElementById('userMtnNumber').value;
+                    if (!userNumber) {
+                        alert('Please enter your MTN phone number');
+                        return;
+                    }
+                    userPaymentDetails = `Your MTN Number: ${userNumber}`;
+                } else if (paymentMethod.value === 'airtel') {
+                    const userNumber = document.getElementById('userAirtelNumber').value;
+                    if (!userNumber) {
+                        alert('Please enter your Airtel phone number');
+                        return;
+                    }
+                    userPaymentDetails = `Your Airtel Number: ${userNumber}`;
+                } else if (paymentMethod.value === 'bank') {
+                    const userAccount = document.getElementById('userBankAccount').value;
+                    if (!userAccount) {
+                        alert('Please enter your bank account number');
+                        return;
+                    }
+                    userPaymentDetails = `Your Bank Account: ${userAccount}`;
+                }
+            }
+            
+            // Format price with commas
+            const priceFRW = parseInt(productPrice).toLocaleString();
+            
+            // Create WhatsApp message (using * for bold formatting)
+            const message = `*NEW ORDER - WIZKENO STYLISTY*\n\n` +
+                `*Customer Details:*\n` +
+                `Name: ${fullname}\n` +
+                `Email: ${email}\n` +
+                `Phone: ${phone}\n\n` +
+                `*Order Details:*\n` +
+                `Product: ${productName}\n` +
+                `Price: ${priceFRW} FRW\n\n` +
+                `*Payment Method:* ${paymentMethodName}\n` +
+                `${userPaymentDetails}\n\n` +
+                `*Delivery Address:*\n` +
+                `${address}, ${city}, ${zip}\n\n` +
+                `Notes: ${notes || 'None'}`;
+            
+            // Encode message for URL (special characters need encoding)
+            const encodedMessage = encodeURIComponent(message);
+            const adminPhone = '250798778772'; // Rwanda country code + phone
+            
+            // Open WhatsApp with pre-filled message
+            // wa.me is WhatsApp's web API for direct messaging
+            window.open(`https://wa.me/${adminPhone}?text=${encodedMessage}`, '_blank');
+            
+            alert('Thank you for your order! You will be redirected to WhatsApp to confirm your order.');
+            this.reset(); // Clear form after submission
+        });
+    </script>
+
+</body>
+</html>
